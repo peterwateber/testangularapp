@@ -63,6 +63,11 @@
   margin-top: 15px;
 }
 
+.pokemon-body {
+  border-color: #28a745 !important;
+  padding: 20px;
+}
+
 @media (max-width: 767px) {
   .form-area,
   .form-search {
@@ -140,7 +145,13 @@
 }
 
 .bg-purple {
-  background-color: #000;
+  background-color: #fff;
+  border: 1px solid #28a745 !important;
+}
+
+.load-more {
+  display: block;
+  margin-top: 15px;
 }
 
 .border-bottom {

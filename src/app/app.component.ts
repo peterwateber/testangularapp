@@ -18,18 +18,21 @@ export class AppComponent {
 	public loading: boolean;
 	public defaultSearchLength: number;
 	public search: string;
+	private pokemonPages;
+	private defaultPagesLength: number;
 
 	constructor(private fetchPokemon: FetchPokemon) {
 		this.pokemons = [];
 		this.abilities = [];
 		this.emptyResults = false;
 		this.loading = false;
+		this.pokemonPages = [1,2,3,4,5];
 		this.displayDefaultResult();
 	}
 
 	displayDefaultResult() {
 			this.loading = true;
-			this.fetchPokemon.getPokemon().subscribe(pokemons => {
+			this.fetchPokemon.getPokemon(this.pokemonPages).subscribe(pokemons => {
 				this.loading = false;
 				this.pokemons = pokemons;
 				pokemons.map( pokemon => {
@@ -41,6 +44,9 @@ export class AppComponent {
 						}
 					);
 				});
+			}, error => {
+					this.loading = false;
+					this.emptyResults = true;
 			})
 	}
 
@@ -69,5 +75,29 @@ export class AppComponent {
 			}
 		)
 		return false;
+	}
+
+	loadMore() {
+		for (let i=0; i<5; i++) {
+			this.pokemonPages.push(this.pokemonPages.length + 1);
+		}
+
+		this.loading = true;
+		this.fetchPokemon.getPokemon(this.pokemonPages).subscribe(pokemons => {
+			this.loading = false;
+			this.pokemons = pokemons;
+			pokemons.map( pokemon => {
+				this.fetchPokemon.getPokemonAbilities(pokemon).subscribe(
+					ability => {
+							ability.map(res => {
+									this.abilities.push(res)
+							})
+					}
+				);
+			});
+		}, error => {
+				this.loading = false;
+				this.emptyResults = true;
+		})
 	}
 }

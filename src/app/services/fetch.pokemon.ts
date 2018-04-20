@@ -8,7 +8,6 @@ import { Observable } from 'rxjs/Rx';
 export class FetchPokemon {
 	private pages;
 	constructor(private http: Http) {
-			this.pages = [66,22,33,44,55]; //default pokemons
 	}
 
 	searchPokemon(query) {
@@ -21,11 +20,14 @@ export class FetchPokemon {
 							})
 	}
 
-	getPokemon() {
+	getPokemon(pages) {
 		return Observable.forkJoin(
-			this.pages.map(
+			pages.map(
 				i => this.http.get('https://pokeapi.co/api/v2/pokemon/' + i)
 					.map(res => res.json())
+					.catch(err => {
+						 return Observable.throw(new Error(err.status));
+					})
 			)
 		);
 	}
