@@ -49,7 +49,7 @@
       </div>
     </div>
 
-    <a href="javascript:void(0);" (click)="loadMore()" class="btn btn-success load-more">Load More</a>
+    <a href="javascript:void(0);" *ngIf="!loading && pokemons.length > 0" (click)="loadMore()" class="btn btn-success load-more">Load More</a>
   </div>
 
 </main>
