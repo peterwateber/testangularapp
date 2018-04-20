@@ -10,7 +10,7 @@ import { PokemonHeader } from "./pokemon.header";
 import { FetchPokemon } from "./services/fetch.pokemon";
 
 @NgModule({
-	declarations: [AppComponent],
+	declarations: [AppComponent, Navigation, PokemonHeader],
 	imports: [BrowserModule, FormsModule, HttpModule, NguiAutoCompleteModule],
 	providers: [],
 	bootstrap: [AppComponent]
