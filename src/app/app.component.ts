@@ -11,12 +11,13 @@ import { Observable } from 'rxjs/Rx';
 })
 
 export class AppComponent {
-	private pokemons;
-	private abilities;
-	private query: string;
-	private emptyResults: boolean;
-	private loading: boolean;
-	private defaultSearchLength: number;
+	public pokemons;
+	public abilities;
+	public query: string;
+	public emptyResults: boolean;
+	public loading: boolean;
+	public defaultSearchLength: number;
+	public search: string;
 
 	constructor(private fetchPokemon: FetchPokemon) {
 		this.pokemons = [];
