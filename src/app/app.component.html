@@ -5,7 +5,7 @@
     <div class="lh-100 form-area">
       <form #query="ngForm"  class="form-search my-2 my-lg-0" (ngSubmit)="onSearch(query.value)">
         <strong>Pokemon Pokedex&nbsp;&nbsp;</strong>
-        <input class="form-control mr-sm-2" type="text" name="search" placeholder="Search for a name or id" [(ngModel)]="search"/>
+        <input class="form-control mr-sm-2" type="text" name="search" placeholder="Search for a pokemon by name or id" [(ngModel)]="search"/>
         <button class="btn btn-outline-success my-2" type="submit">Go</button>
       </form>
     </div>
@@ -48,8 +48,10 @@
         </div>
       </div>
     </div>
-
-    <a href="javascript:void(0);" *ngIf="!loading && pokemons.length > 0" (click)="loadMore()" class="btn btn-success load-more">Load More</a>
+    <div *ngIf="showLoadMoreLoading" class="btn btn-warning load-more">
+      Loading...
+    </div>
+    <a href="javascript:void(0);" *ngIf="!loading && pokemons.length > 1" (click)="loadMore()" class="btn btn-success load-more">Load More</a>
   </div>
 
 </main>

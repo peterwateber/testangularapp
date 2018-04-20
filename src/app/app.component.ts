@@ -20,12 +20,14 @@ export class AppComponent {
 	public search: string;
 	private pokemonPages;
 	private defaultPagesLength: number;
+	private showLoadMoreLoading: boolean;
 
 	constructor(private fetchPokemon: FetchPokemon) {
 		this.pokemons = [];
 		this.abilities = [];
 		this.emptyResults = false;
 		this.loading = false;
+		this.showLoadMoreLoading = false;
 		this.pokemonPages = [1,2,3,4,5];
 		this.displayDefaultResult();
 	}
@@ -78,14 +80,19 @@ export class AppComponent {
 	}
 
 	loadMore() {
-		for (let i=0; i<5; i++) {
-			this.pokemonPages.push(this.pokemonPages.length + 1);
+		let start = this.pokemonPages[this.pokemonPages.length - 1] + 1;
+		let offset = (start + this.pokemonPages.length) - 1;
+		this.pokemonPages = [];
+		for (let i=start; i<=offset; i++) {
+			this.pokemonPages.push(i);
 		}
 
+		this.showLoadMoreLoading = true;
 		this.loading = true;
 		this.fetchPokemon.getPokemon(this.pokemonPages).subscribe(pokemons => {
 			this.loading = false;
-			this.pokemons = pokemons;
+			this.showLoadMoreLoading = false;
+			this.pokemons = this.pokemons.concat(pokemons);
 			pokemons.map( pokemon => {
 				this.fetchPokemon.getPokemonAbilities(pokemon).subscribe(
 					ability => {
@@ -96,6 +103,7 @@ export class AppComponent {
 				);
 			});
 		}, error => {
+				this.showLoadMoreLoading = false;
 				this.loading = false;
 				this.emptyResults = true;
 		})

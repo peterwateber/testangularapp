@@ -23,7 +23,7 @@ export class FetchPokemon {
 	getPokemon(pages) {
 		return Observable.forkJoin(
 			pages.map(
-				i => this.http.get('https://pokeapi.co/api/v2/pokemon/' + i)
+				i => this.http.get(('https://pokeapi.co/api/v2/pokemon/' + i).replace(/\/?$/, '/'))
 					.map(res => res.json())
 					.catch(err => {
 						 return Observable.throw(new Error(err.status));
@@ -35,7 +35,7 @@ export class FetchPokemon {
 	getPokemonAbilities(pokemon) {
 		return Observable.forkJoin(
 			pokemon.abilities.map(
-							res => this.http.get(res.ability.url)
+							res => this.http.get(res.ability.url.replace(/\/?$/, '/'))
 										.map(res => res.json())
 										.map(ability => {
 												return {
