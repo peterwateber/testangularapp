@@ -1,0 +1,50 @@
+<!--The content below is only a placeholder and can be replaced.-->
+
+<main role="main" class="container">
+  <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-purple rounded box-shadow">
+    <div class="lh-100 form-area">
+      <form #query="ngForm"  class="form-search my-2 my-lg-0" (ngSubmit)="onSearch(query.value)">
+        <strong>Pokemon Pokedex&nbsp;&nbsp;</strong>
+        <input class="form-control mr-sm-2" type="text" name="search" placeholder="Search for a name or id" [(ngModel)]="search"/>
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Go</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="my-3 p-3 bg-white rounded box-shadow">
+    <h6 class="border-bottom border-gray pb-2 mb-0">Pokemons</h6>
+
+    <div class="alert alert-warning error" *ngIf="emptyResults">
+      No search results found for <strong>{{search}}.</strong>
+    </div>
+
+    <div class="progress" *ngIf="loading">
+      <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+        Loading...
+      </div>
+    </div>
+
+    <div class="media text-muted pt-3" *ngFor="let pokes of pokemons">
+      <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+        <h4>
+          {{pokes.name.toLocaleUpperCase()}}
+            <div class="rounded-circle pokeball">
+              <img class="pokeball rounded-circle" src="{{pokes.sprites.front_shiny}}" />
+            </div>
+        </h4>
+        <div>
+          <h6>Abilities</h6>
+          <ul class="abilities">
+            <ng-container *ngFor="let ability of abilities">
+              <li *ngIf="ability.name == pokes.name">
+                <strong>{{ability.ability}}</strong><br/>
+                {{ability.effects}}
+              </li>
+            </ng-container>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
