@@ -20,7 +20,7 @@ export class AppComponent {
 	public search: string;
 	private pokemonPages;
 	private defaultPagesLength: number;
-	private showLoadMoreLoading: boolean;
+	public showLoadMoreLoading: boolean;
 
 	constructor(private fetchPokemon: FetchPokemon) {
 		this.pokemons = [];
